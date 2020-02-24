@@ -3,6 +3,8 @@
 module DailyReportGenerator
   # ReportEvent defines event format that should be reported.
   class ReportEvent
+    attr_reader :source, :event_type, :created_at, :url, :summary, :detail
+
     # @param source [String] Event source name
     # @param event_type [String]
     # @param create_at [Time]

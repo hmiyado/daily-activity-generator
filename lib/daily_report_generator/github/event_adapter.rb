@@ -24,7 +24,7 @@ module DailyReportGenerator
           case event_type
           when 'PullRequestReviewCommentEvent' then
             url = payload.comment.url
-            summary = 'PRコメント'
+            summary = 'PR Comment'
             detail = payload.comment.body
           else
             url = ''
