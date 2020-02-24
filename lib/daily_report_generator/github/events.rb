@@ -10,8 +10,7 @@ module DailyReportGenerator
       end
 
       def fetch
-        events = @client.user_events(@client.login)
-        p events
+        @client.user_events(@client.login)
       end
     end
   end

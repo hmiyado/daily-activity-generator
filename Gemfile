@@ -10,4 +10,5 @@ gem 'thor', '~> 1.0.1'
 gem 'netrc', '~> 0.11.0'
 gem 'rubocop', '~> 0.80.0', require: false
 gem 'solargraph', group: :development
+gem 'pry-byebug', '~> 1.3', '>= 1.3.1', group: :development
 gem 'reek', '~> 5.6.0', require: false
