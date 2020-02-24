@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'daily_report_generator/report_event'
+require 'time'
 
 module DailyReportGenerator
   module Github
@@ -19,7 +20,7 @@ module DailyReportGenerator
         def from_event(event)
           source = 'github'
           event_type = event.type
-          created_at = event.created_at
+          created_at = Time.parse(event.created_at)
           payload = event.payload
           case event_type
           when 'PullRequestReviewCommentEvent' then
