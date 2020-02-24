@@ -30,6 +30,10 @@ module DailyReportGenerator
             url = payload.pull_request.url
             summary = "#{payload.action} #{payload.pull_request.title}"
             detail = payload.pull_request.body
+          when 'CreateEvent' then
+            url = ''
+            summary = "create #{payload.ref_type} #{payload.ref}"
+            detail = ''
           else
             url = ''
             summary = event_type
