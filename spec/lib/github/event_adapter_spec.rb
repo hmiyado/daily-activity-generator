@@ -81,7 +81,7 @@ RSpec.describe 'Github::EventAdapter' do
     expect(actual_event.summary).to eq 'closed sample pull request title'
     expect(actual_event.detail).to eq 'sample pull request body'
   end
-  
+
   it 'should convert CreateEvent' do
     original_event_hash = {
       type: 'CreateEvent',
@@ -129,6 +129,20 @@ RSpec.describe 'Github::EventAdapter' do
   it 'should not convert PushEvent' do
     original_event_hash = {
       type: 'PushEvent',
+      created_at: '2020-02-21T09:45:11Z',
+      payload: {
+      }
+    }
+    original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
+
+    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+
+    expect(actual_events).to be_empty
+  end
+
+  it 'should not convert unknown event' do
+    original_event_hash = {
+      type: 'UnknownEvent',
       created_at: '2020-02-21T09:45:11Z',
       payload: {
       }

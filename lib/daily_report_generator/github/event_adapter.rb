@@ -41,9 +41,7 @@ module DailyReportGenerator
           when 'PushEvent'
             return nil
           else
-            url = ''
-            summary = event_type
-            detail = ''
+            return nil
           end
           DailyReportGenerator::ReportEvent.new(source, event_type, created_at, url, summary, detail)
         end
