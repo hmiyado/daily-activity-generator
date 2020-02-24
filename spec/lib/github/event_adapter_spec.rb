@@ -78,7 +78,29 @@ RSpec.describe 'Github::EventAdapter' do
     expect(actual_event.detail).to eq ''
   end
 
-    it 'should not convert PushEvent' do
+  it 'should convert DeleteEvent' do
+    original_event_hash = {
+      type: 'DeleteEvent',
+      created_at: '2020-02-21T09:45:11Z',
+      payload: {
+        ref_type: 'branch',
+        ref: 'feature/new_feature'
+      }
+    }
+    original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
+
+    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_event = actual_events[0]
+
+    expect(actual_event.source).to eq 'github'
+    expect(actual_event.event_type).to eq 'DeleteEvent'
+    expect(actual_event.created_at).to eq '2020-02-21T09:45:11Z'
+    expect(actual_event.url).to eq ''
+    expect(actual_event.summary).to eq 'delete branch feature/new_feature'
+    expect(actual_event.detail).to eq ''
+  end
+
+  it 'should not convert PushEvent' do
     original_event_hash = {
       type: 'PushEvent',
       created_at: '2020-02-21T09:45:11Z',
@@ -91,5 +113,4 @@ RSpec.describe 'Github::EventAdapter' do
 
     expect(actual_events).to be_empty
   end
-
 end

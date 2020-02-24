@@ -34,7 +34,11 @@ module DailyReportGenerator
             url = ''
             summary = "create #{payload.ref_type} #{payload.ref}"
             detail = ''
-        when 'PushEvent' then
+          when 'DeleteEvent' then
+            url = ''
+            summary = "delete #{payload.ref_type} #{payload.ref}"
+            detail = ''
+          when 'PushEvent'
             return nil
           else
             url = ''
