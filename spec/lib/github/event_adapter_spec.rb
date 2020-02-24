@@ -77,4 +77,19 @@ RSpec.describe 'Github::EventAdapter' do
     expect(actual_event.summary).to eq 'create branch feature/new_feature'
     expect(actual_event.detail).to eq ''
   end
+
+    it 'should not convert PushEvent' do
+    original_event_hash = {
+      type: 'PushEvent',
+      created_at: '2020-02-21T09:45:11Z',
+      payload: {
+      }
+    }
+    original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
+
+    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+
+    expect(actual_events).to be_empty
+  end
+
 end

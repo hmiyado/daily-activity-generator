@@ -9,7 +9,7 @@ module DailyReportGenerator
         # @param event [Array<Sawyer::Resource>]
         # @return [Array<DailyReportGenerator::ReportEvent>]
         def from(events)
-          events.map! { |event| from_event(event) }
+          events.map! { |event| from_event(event) }.compact
         end
 
         private
@@ -34,6 +34,8 @@ module DailyReportGenerator
             url = ''
             summary = "create #{payload.ref_type} #{payload.ref}"
             detail = ''
+        when 'PushEvent' then
+            return nil
           else
             url = ''
             summary = event_type
