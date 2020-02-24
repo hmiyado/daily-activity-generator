@@ -1,4 +1,5 @@
 require 'thor'
+require 'daily_report_generator/report_source'
 
 module DailyReportGenerator
     class Cli < Thor
@@ -6,7 +7,7 @@ module DailyReportGenerator
 
         desc "github", "generate github daily report"
         def github
-            say 'github'
+            DailyReportGenerator::ReportSource.github_events
         end
 
     end
