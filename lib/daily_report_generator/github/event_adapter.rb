@@ -20,7 +20,13 @@ module DailyReportGenerator
         def from_event(event)
           source = 'github'
           event_type = event.type
-          created_at = Time.parse(event.created_at)
+          created_at = if event.created_at.instance_of? Time
+                         event.created_at
+                       elsif event.created_at.instance_of? String
+                         Time.parse(event.created_at)
+                       else
+                         return nil
+                    end
           payload = event.payload
           case event_type
           when 'PullRequestReviewCommentEvent' then

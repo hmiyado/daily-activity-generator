@@ -7,8 +7,8 @@ module DailyReportGenerator
 
         desc "github", "generate github daily report"
         def github
-            report_events = DailyReportGenerator::ReportSource.github_events
-            p report_events
+            today_events = DailyReportGenerator::ReportSource.today
+            p today_events
         end
 
     end
