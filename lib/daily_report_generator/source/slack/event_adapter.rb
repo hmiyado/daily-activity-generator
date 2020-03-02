@@ -7,6 +7,7 @@ module DailyReportGenerator
   module Source
     module Slack
       module EventAdapter
+        MAX_SUMMARY_TEXT_LENGTH=20
         class << self
           # @param events [Array<Slack::Messages::Message>]
           # @return [Array<DailyReportGenerator::ReportEvent>]
@@ -22,12 +23,13 @@ module DailyReportGenerator
             source = 'slack'
             event_type = 'comment'
 
-            created_at = Time.at(event.ts.to_f)
+            created_at = Time.at(event.ts.to_i)
 
             url = event.permalink
             text = event.text
-            summary_text = if text.length > 10
-                text[0,10] + "..."
+
+            summary_text = if text.length > MAX_SUMMARY_TEXT_LENGTH
+                text[0,MAX_SUMMARY_TEXT_LENGTH] + "..."
               else
                 text
               end
