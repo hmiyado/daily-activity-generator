@@ -11,6 +11,12 @@ module DailyReportGenerator
             github_events.each { |event| puts event.oneline }
         end
 
+        desc "google_calendar", "generate google calendar report"
+        def google_calendar
+            google_calendar_events = DailyReportGenerator::ReportSource.google_calendar_events
+            google_calendar_events.each { |event| puts event.oneline }
+        end
+
         desc "today", "generate today report"
         def today
             today_events = DailyReportGenerator::ReportSource.today

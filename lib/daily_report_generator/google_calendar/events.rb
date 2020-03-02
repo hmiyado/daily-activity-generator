@@ -31,8 +31,7 @@ module DailyReportGenerator
       # @return [Google::Apis::CalendarV3::Events]
       def fetch
         calendar_id = 'primary'
-        response = service.list_events(calendar_id,
-                                       order_by: 'startTime')
+        response = @service.list_events(calendar_id)
       end
 
       private

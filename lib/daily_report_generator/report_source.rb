@@ -5,6 +5,8 @@ require 'octokit'
 require 'pry'
 require 'daily_report_generator/github/events'
 require 'daily_report_generator/github/event_adapter'
+require 'daily_report_generator/google_calendar/events'
+require 'daily_report_generator/google_calendar/event_adapter'
 
 module DailyReportGenerator
   module ReportSource
@@ -13,6 +15,11 @@ module DailyReportGenerator
         octokit = Octokit::Client.new(netrc: true)
         github_events = DailyReportGenerator::Github::Events.new(octokit).fetch
         report_events = DailyReportGenerator::Github::EventAdapter.from(github_events)
+      end
+
+      def google_calendar_events
+        google_calendar_events = DailyReportGenerator::GoogleCalendar::Events.new().fetch
+        DailyReportGenerator::GoogleCalendar::EventAdapter.from(google_calendar_events.items)
       end
 
       def today
