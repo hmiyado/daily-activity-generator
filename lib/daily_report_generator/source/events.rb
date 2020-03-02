@@ -29,7 +29,8 @@ module DailyReportGenerator
         def all
           github_events = github
           google_calendar_events = google_calendar
-          (github_events + google_calendar_events).sort_by(&:created_at)
+          slack_events = slack
+          (github_events + google_calendar_events + slack).sort_by(&:created_at)
         end
       end
     end
