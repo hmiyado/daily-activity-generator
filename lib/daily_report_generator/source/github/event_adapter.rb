@@ -18,16 +18,12 @@ module DailyReportGenerator
           private
 
           # @param event [Sawyer::Resource]
-          # @return [DailyReportGenerator::ReportEvent]
+          # @return [DailyReportGenerator::ReportEvent] or nil
           def from_event(event)
             source = 'github'
-            created_at = if event.created_at.instance_of? Time
-                           event.created_at
-                         elsif event.created_at.instance_of? String
-                           Time.parse(event.created_at)
-                         else
-                           return nil
-                      end
+            created_at = extract_created_at(event)
+            return nil if created_at.nil?
+
             payload = event.payload
             case event.type
             when 'PullRequestReviewCommentEvent' then
@@ -56,6 +52,17 @@ module DailyReportGenerator
               return nil
             end
             DailyReportGenerator::ReportEvent.new(source, event_type, created_at, url, summary, detail)
+          end
+
+          # @param [Sawyer::Resource]
+          # @return [Time] or nil if created_at is not present
+          def extract_created_at(event)
+            created_at = event.created_at
+            if created_at.instance_of? Time
+              created_at
+            elsif created_at.instance_of? String
+              Time.parse(created_at)
+            end
           end
         end
       end
