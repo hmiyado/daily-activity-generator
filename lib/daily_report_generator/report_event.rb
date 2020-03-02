@@ -19,5 +19,10 @@ module DailyReportGenerator
       @summary = summary
       @detail = detail
     end
+
+    def oneline
+      formatted_time = @created_at.strftime('%Y/%m/%d %H:%M')
+      "#{formatted_time} [#{summary}](#{@url})"
+    end
   end
 end
