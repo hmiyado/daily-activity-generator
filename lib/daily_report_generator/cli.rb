@@ -7,6 +7,7 @@ module DailyReportGenerator
 
         desc "github", "generate github daily report"
         def github
+            DailyReportGenerator::Source::Events.setup
             github_events = DailyReportGenerator::Source::Events.github
             github_events.each { |event| puts event.oneline }
         end

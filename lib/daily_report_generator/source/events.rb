@@ -14,10 +14,7 @@ module DailyReportGenerator
 
       class << self
         def github
-          Github::ReportEvents.new.fetch.filter do |event|
-            created_at_local = event.created_at.getlocal
-            created_at_local.between?(@start, @end)
-          end
+          Github::ReportEvents.new(self).fetch
         end
 
         def google_calendar
