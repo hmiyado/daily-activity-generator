@@ -17,6 +17,12 @@ module DailyReportGenerator
       def setup
         today
       end
+
+      # @param configurable [DailyReportGenerator::Source::Configurable]
+      def configure_with(configurable)
+        @start = configurable.start
+        @end = configurable.end
+      end
     end
   end
 end

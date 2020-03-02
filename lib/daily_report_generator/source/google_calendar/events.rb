@@ -29,10 +29,15 @@ module DailyReportGenerator
         end
 
         # fetch google calendar events
+        # @param start_datetime [String] datetime formatted with rfc3339
+        # @param end_datetime [String] datetime formatted with rfc3339
         # @return [Google::Apis::CalendarV3::Events]
-        def fetch
-          calendar_id = 'primary'
-          response = @service.list_events(calendar_id)
+        def fetch(start_datetime, end_datetime)
+          @service.list_events(
+            'primary',
+            time_min: start_datetime,
+            time_max: end_datetime
+          )
         end
 
         private

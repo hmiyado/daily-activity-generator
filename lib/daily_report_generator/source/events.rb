@@ -21,7 +21,7 @@ module DailyReportGenerator
         end
 
         def google_calendar
-          GoogleCalendar::ReportEvents.new.fetch
+          GoogleCalendar::ReportEvents.new(self).fetch
         end
 
         def all

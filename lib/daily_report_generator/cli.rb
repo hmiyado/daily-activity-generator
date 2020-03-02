@@ -13,6 +13,7 @@ module DailyReportGenerator
 
         desc "google_calendar", "generate google calendar report"
         def google_calendar
+            DailyReportGenerator::Source::Events.setup
             google_calendar_events = DailyReportGenerator::Source::Events.google_calendar
             google_calendar_events.each { |event| puts event.oneline }
         end
