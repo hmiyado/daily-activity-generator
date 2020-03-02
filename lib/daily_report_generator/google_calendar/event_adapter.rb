@@ -22,12 +22,9 @@ module DailyReportGenerator
           event_type = 'MTG'
           created_at = Time.parse(event.start.date_time.to_s)
 
-          # [Google::Apis::CalendarV3::Event::Source]
-          event_source = event.source
-
-          url = event_source.url
-          summary = event_source.title
-          detail = ''
+          url = event.html_link
+          summary = event.summary
+          detail = event.description
           DailyReportGenerator::ReportEvent.new(source, event_type, created_at, url, summary, detail)
         end
       end
