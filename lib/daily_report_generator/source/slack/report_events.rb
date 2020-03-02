@@ -24,7 +24,9 @@ module DailyReportGenerator
 
         def fetch
           client = SlackClient::Web::Client.new
-          Events.new(client).fetch
+          Events.new(client).fetch(
+            @start.strftime('%Y/%m/%d')
+          )
         end
       end
     end
