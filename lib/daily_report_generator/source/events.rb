@@ -4,6 +4,7 @@ require 'time'
 require 'pry'
 require 'daily_report_generator/source/github/report_events'
 require 'daily_report_generator/source/google_calendar/report_events'
+require 'daily_report_generator/source/slack/report_events'
 require_relative 'configurable'
 
 module DailyReportGenerator
@@ -19,6 +20,10 @@ module DailyReportGenerator
 
         def google_calendar
           GoogleCalendar::ReportEvents.new(self).fetch
+        end
+
+        def slack
+          Slack::ReportEvents.new(self).fetch
         end
 
         def all
