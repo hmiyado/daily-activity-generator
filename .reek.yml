@@ -1,0 +1,3 @@
+DuplicateMethodCall:
+  exclude:
+  - "EventAdapter#extract_from_payload"

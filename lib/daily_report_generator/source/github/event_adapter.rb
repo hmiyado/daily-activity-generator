@@ -24,34 +24,20 @@ module DailyReportGenerator
             created_at = extract_created_at(event)
             return nil if created_at.nil?
 
-            payload = event.payload
-            case event.type
-            when 'PullRequestReviewCommentEvent' then
-              event_type = 'PR review'
-              url = payload.comment.html_url
-              summary = payload.pull_request.title.to_s
-              detail = payload.comment.body
-            when 'PullRequestEvent' then
-              event_type = "PR #{payload.action}"
-              url = payload.pull_request.html_url
-              summary = payload.pull_request.title.to_s
-              detail = payload.pull_request.body
-            when 'CreateEvent' then
-              event_type = 'create'
-              url = ''
-              summary = "#{payload.ref_type} #{payload.ref}"
-              detail = ''
-            when 'DeleteEvent' then
-              event_type = 'delete'
-              url = ''
-              summary = "#{payload.ref_type} #{payload.ref}"
-              detail = ''
-            when 'PushEvent'
-              return nil
-            else
-              return nil
-            end
-            DailyReportGenerator::ReportEvent.new(source, event_type, created_at, url, summary, detail)
+            payload = extract_from_payload(
+              event.type,
+              event.payload
+            )
+            return nil if payload.nil?
+
+            DailyReportGenerator::ReportEvent.new(
+              source,
+              payload[:event_type],
+              created_at,
+              payload[:url],
+              payload[:summary],
+              payload[:detail]
+            )
           end
 
           # @param [Sawyer::Resource]
@@ -62,6 +48,36 @@ module DailyReportGenerator
               created_at
             elsif created_at.instance_of? String
               Time.parse(created_at)
+            end
+          end
+
+          # @param event_type [String] github event type name
+          # @param payload [Hash] github event payload
+          # @return [String, String, String, String]
+          def extract_from_payload(event_type, payload)
+            case event_type
+            when 'PullRequestReviewCommentEvent' then
+              { event_type: 'PR review',
+                url: payload.comment.html_url,
+                summary: payload.pull_request.title.to_s,
+                detail: payload.comment.body }
+            when 'PullRequestEvent' then
+              { event_type: "PR #{payload.action}",
+                url: payload.pull_request.html_url,
+                summary: payload.pull_request.title.to_s,
+                detail: payload.pull_request.body }
+            when 'CreateEvent' then
+              { event_type: 'create',
+                url: '',
+                summary: "#{payload.ref_type} #{payload.ref}",
+                detail: '' }
+            when 'DeleteEvent' then
+              { event_type: 'delete',
+                url: '',
+                summary: "#{payload.ref_type} #{payload.ref}",
+                detail: '' }
+            when 'PushEvent'
+              nil
             end
           end
         end
