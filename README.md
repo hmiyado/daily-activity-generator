@@ -20,6 +20,25 @@ Or install it yourself as:
 
     $ gem install daily_report_generator
 
+### for Github
+
+Write `~/.netrc`
+
+```
+machine api.github.com
+  login your_username
+  password password_or_your_api_token
+```
+
+### for Google Calendar
+
+Create your service account and download credential file in `~/credentials.json`
+see: https://cloud.google.com/docs/authentication/getting-started?hl=en
+
+### for Slack
+
+Set your slack access token as environment variable `SLACK_API_TOKEN`
+
 ## Usage
 
 ```
