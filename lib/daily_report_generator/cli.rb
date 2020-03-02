@@ -8,13 +8,13 @@ module DailyReportGenerator
         desc "github", "generate github daily report"
         def github
             github_events = DailyReportGenerator::ReportSource.github_events
-            p github_events
+            github_events.each { |event| puts event.oneline }
         end
 
         desc "today", "generate today report"
         def today
             today_events = DailyReportGenerator::ReportSource.today
-            p today_events
+            today_events.map { |event| puts event.oneline }
         end
 
     end
