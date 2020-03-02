@@ -9,9 +9,13 @@ module DailyReportGenerator
     module Configurable
       attr_accessor :start, :end
 
-      def setup
+      def today
         @start = Date.today.to_time
         @end = Date.today.next.to_time
+      end
+
+      def setup
+        today
       end
     end
   end

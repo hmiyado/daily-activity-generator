@@ -19,7 +19,8 @@ module DailyReportGenerator
 
         desc "today", "generate today report"
         def today
-            today_events = DailyReportGenerator::Source::Events.today
+            DailyReportGenerator::Source::Events.today
+            today_events = DailyReportGenerator::Source::Events.all
             today_events.map { |event| puts event.oneline }
         end
 
