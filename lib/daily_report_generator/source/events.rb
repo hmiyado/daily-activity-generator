@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'time'
-require 'octokit'
 require 'pry'
-require 'daily_report_generator/source/github/events'
-require 'daily_report_generator/source/github/event_adapter'
+require 'daily_report_generator/source/github/report_events'
 require 'daily_report_generator/source/google_calendar/events'
 require 'daily_report_generator/source/google_calendar/event_adapter'
 
@@ -14,9 +12,7 @@ module DailyReportGenerator
     module Events
       class << self
         def github
-          octokit = Octokit::Client.new(netrc: true)
-          github_events = DailyReportGenerator::Source::Github::Events.new(octokit).fetch
-          DailyReportGenerator::Source::Github::EventAdapter.from(github_events)
+          DailyReportGenerator::Source::Github::ReportEvents.new.fetch
         end
 
         def google_calendar
