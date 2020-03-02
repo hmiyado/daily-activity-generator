@@ -12,7 +12,7 @@ RSpec.describe 'Github::EventAdapter' do
       created_at: '2020-02-21T09:45:11Z',
       payload: {
         comment: {
-          url: 'https://github.com/org/repo/pulls/comment/1',
+          html_url: 'https://github.com/org/repo/pulls/comment/1',
           body: 'sample body'
         }
       }
@@ -37,7 +37,7 @@ RSpec.describe 'Github::EventAdapter' do
       payload: {
         action: 'open',
         pull_request: {
-          url: 'https://github.com/org/repo/pulls/1',
+          html_url: 'https://github.com/org/repo/pulls/1',
           title: 'sample pull request title',
           body: 'sample pull request body'
         }
@@ -64,7 +64,7 @@ RSpec.describe 'Github::EventAdapter' do
       payload: {
         action: 'open',
         pull_request: {
-          url: 'https://github.com/org/repo/pulls/1',
+          html_url: 'https://github.com/org/repo/pulls/1',
           title: 'sample pull request title',
           body: 'sample pull request body'
         }
@@ -90,7 +90,7 @@ RSpec.describe 'Github::EventAdapter' do
       payload: {
         action: 'closed',
         pull_request: {
-          url: 'https://github.com/org/repo/pulls/1',
+          html_url: 'https://github.com/org/repo/pulls/1',
           title: 'sample pull request title',
           body: 'sample pull request body'
         }

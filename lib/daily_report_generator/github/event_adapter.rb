@@ -30,11 +30,11 @@ module DailyReportGenerator
           payload = event.payload
           case event_type
           when 'PullRequestReviewCommentEvent' then
-            url = payload.comment.url
+            url = payload.comment.html_url
             summary = 'PR Comment'
             detail = payload.comment.body
           when 'PullRequestEvent' then
-            url = payload.pull_request.url
+            url = payload.pull_request.html_url
             summary = "#{payload.action} #{payload.pull_request.title}"
             detail = payload.pull_request.body
           when 'CreateEvent' then
