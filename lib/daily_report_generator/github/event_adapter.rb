@@ -19,7 +19,6 @@ module DailyReportGenerator
         # @return [DailyReportGenerator::ReportEvent]
         def from_event(event)
           source = 'github'
-          event_type = event.type
           created_at = if event.created_at.instance_of? Time
                          event.created_at
                        elsif event.created_at.instance_of? String
@@ -28,22 +27,26 @@ module DailyReportGenerator
                          return nil
                     end
           payload = event.payload
-          case event_type
+          case event.type
           when 'PullRequestReviewCommentEvent' then
+            event_type = 'PR review'
             url = payload.comment.html_url
-            summary = 'PR Comment'
+            summary = payload.pull_request.title.to_s
             detail = payload.comment.body
           when 'PullRequestEvent' then
+            event_type = "PR #{payload.action}"
             url = payload.pull_request.html_url
-            summary = "#{payload.action} #{payload.pull_request.title}"
+            summary = payload.pull_request.title.to_s
             detail = payload.pull_request.body
           when 'CreateEvent' then
+            event_type = 'create'
             url = ''
-            summary = "create #{payload.ref_type} #{payload.ref}"
+            summary = "#{payload.ref_type} #{payload.ref}"
             detail = ''
           when 'DeleteEvent' then
+            event_type = 'delete'
             url = ''
-            summary = "delete #{payload.ref_type} #{payload.ref}"
+            summary = "#{payload.ref_type} #{payload.ref}"
             detail = ''
           when 'PushEvent'
             return nil

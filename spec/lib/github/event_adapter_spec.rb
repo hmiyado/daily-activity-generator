@@ -14,6 +14,11 @@ RSpec.describe 'Github::EventAdapter' do
         comment: {
           html_url: 'https://github.com/org/repo/pulls/comment/1',
           body: 'sample body'
+        },
+        pull_request: {
+          html_url: 'https://github.com/org/repo/pulls/1',
+          title: 'sample pull request title',
+          body: 'sample pull request body'
         }
       }
     }
@@ -23,10 +28,10 @@ RSpec.describe 'Github::EventAdapter' do
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PullRequestReviewCommentEvent'
+    expect(actual_event.event_type).to eq 'PR review'
     expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
     expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/comment/1'
-    expect(actual_event.summary).to eq 'PR Comment'
+    expect(actual_event.summary).to eq 'sample pull request title'
     expect(actual_event.detail).to eq 'sample body'
   end
 
@@ -50,10 +55,10 @@ RSpec.describe 'Github::EventAdapter' do
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PullRequestEvent'
+    expect(actual_event.event_type).to eq 'PR open'
     expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
     expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/1'
-    expect(actual_event.summary).to eq 'open sample pull request title'
+    expect(actual_event.summary).to eq 'sample pull request title'
     expect(actual_event.detail).to eq 'sample pull request body'
   end
 
@@ -76,10 +81,10 @@ RSpec.describe 'Github::EventAdapter' do
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PullRequestEvent'
+    expect(actual_event.event_type).to eq 'PR open'
     expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
     expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/1'
-    expect(actual_event.summary).to eq 'open sample pull request title'
+    expect(actual_event.summary).to eq 'sample pull request title'
     expect(actual_event.detail).to eq 'sample pull request body'
   end
 
@@ -102,10 +107,10 @@ RSpec.describe 'Github::EventAdapter' do
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PullRequestEvent'
+    expect(actual_event.event_type).to eq 'PR closed'
     expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
     expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/1'
-    expect(actual_event.summary).to eq 'closed sample pull request title'
+    expect(actual_event.summary).to eq 'sample pull request title'
     expect(actual_event.detail).to eq 'sample pull request body'
   end
 
@@ -124,10 +129,10 @@ RSpec.describe 'Github::EventAdapter' do
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'CreateEvent'
+    expect(actual_event.event_type).to eq 'create'
     expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
     expect(actual_event.url).to eq ''
-    expect(actual_event.summary).to eq 'create branch feature/new_feature'
+    expect(actual_event.summary).to eq 'branch feature/new_feature'
     expect(actual_event.detail).to eq ''
   end
 
@@ -146,10 +151,10 @@ RSpec.describe 'Github::EventAdapter' do
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'DeleteEvent'
+    expect(actual_event.event_type).to eq 'delete'
     expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
     expect(actual_event.url).to eq ''
-    expect(actual_event.summary).to eq 'delete branch feature/new_feature'
+    expect(actual_event.summary).to eq 'branch feature/new_feature'
     expect(actual_event.detail).to eq ''
   end
 
