@@ -3,6 +3,7 @@
 require 'slack-ruby-client'
 
 require_relative 'events'
+require_relative 'event_adapter'
 require 'daily_report_generator/source/configurable'
 
 # alias for Slack module defined in slack-ruby-client
@@ -24,9 +25,10 @@ module DailyReportGenerator
 
         def fetch
           client = SlackClient::Web::Client.new
-          Events.new(client).fetch(
+          events = Events.new(client).fetch(
             @start.strftime('%Y/%m/%d')
           )
+          EventAdapter.from(events.messages.matches)
         end
       end
     end

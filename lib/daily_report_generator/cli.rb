@@ -25,7 +25,7 @@ module DailyReportGenerator
     def slack
       DailyReportGenerator::Source::Events.setup
       events = DailyReportGenerator::Source::Events.slack
-      p events
+      events.map { |event| puts event.oneline }
     end
 
     desc 'today', 'generate today report'
