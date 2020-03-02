@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'daily_report_generator/google_calendar/event_adapter'
 require 'ostruct'
@@ -28,7 +30,7 @@ RSpec.describe 'GoogleCalendar::EventAdapter' do
     expect(actual_event.detail).to eq 'description'
   end
 
-    it 'should convert google calendar all-day event' do
+  it 'should convert google calendar all-day event' do
     original_event_hash = {
       start: {
         date: '2020-01-01'
@@ -51,4 +53,16 @@ RSpec.describe 'GoogleCalendar::EventAdapter' do
     expect(actual_event.detail).to eq 'description'
   end
 
+  it 'should not convert google calendar event without start time' do
+    original_event_hash = {
+      html_link: 'https://html.link',
+      summary: 'event summary',
+      description: 'description'
+    }
+    original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
+
+    actual_events = DailyReportGenerator::GoogleCalendar::EventAdapter.from([original_event])
+
+    expect(actual_events).to be_empty
+  end
 end

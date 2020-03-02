@@ -22,6 +22,7 @@ module DailyReportGenerator
           event_type = 'MTG'
           # [Google::Apis::CalendarV3::EventDateTime]
           start = event.start
+          return nil if start.nil?
           created_at = if start.date_time.nil?
                          Time.parse(start.date.to_s)
                        else
