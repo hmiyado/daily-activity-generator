@@ -22,7 +22,7 @@ module DailyReportGenerator
 
     def oneline
       formatted_time = @created_at.getlocal.strftime('%Y/%m/%d %H:%M')
-      "#{formatted_time} [#{summary}](#{@url})"
+      "#{formatted_time} #{@event_type} [#{summary}](#{@url})"
     end
   end
 end

@@ -17,6 +17,6 @@ RSpec.describe 'ReportEvent' do
     
     oneline = event.oneline
 
-    expect(oneline).to eq '2000/01/01 12:34 [summary](https://url.com)' 
+    expect(oneline).to eq '2000/01/01 12:34 eventtype [summary](https://url.com)' 
   end
 end
