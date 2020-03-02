@@ -20,7 +20,13 @@ module DailyReportGenerator
         def from_event(event)
           source = 'google calendar'
           event_type = 'MTG'
-          created_at = Time.parse(event.start.date_time.to_s)
+          # [Google::Apis::CalendarV3::EventDateTime]
+          start = event.start
+          created_at = if start.date_time.nil?
+                         Time.parse(start.date.to_s)
+                       else
+                         Time.parse(start.date_time.to_s)
+                       end
 
           url = event.html_link
           summary = event.summary
