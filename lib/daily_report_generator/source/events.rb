@@ -3,8 +3,7 @@
 require 'time'
 require 'pry'
 require 'daily_report_generator/source/github/report_events'
-require 'daily_report_generator/source/google_calendar/events'
-require 'daily_report_generator/source/google_calendar/event_adapter'
+require 'daily_report_generator/source/google_calendar/report_events'
 
 module DailyReportGenerator
   module Source
@@ -12,12 +11,11 @@ module DailyReportGenerator
     module Events
       class << self
         def github
-          DailyReportGenerator::Source::Github::ReportEvents.new.fetch
+          Github::ReportEvents.new.fetch
         end
 
         def google_calendar
-          google_calendar_events = DailyReportGenerator::Source::GoogleCalendar::Events.new.fetch
-          DailyReportGenerator::Source::GoogleCalendar::EventAdapter.from(google_calendar_events.items)
+          GoogleCalendar::ReportEvents.new.fetch
         end
 
         def today
