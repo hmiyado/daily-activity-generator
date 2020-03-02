@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'daily_report_generator/github/event_adapter'
+require 'daily_report_generator/source/github/event_adapter'
 require 'ostruct'
 require 'json'
 
-RSpec.describe 'Github::EventAdapter' do
+RSpec.describe 'Source::Github::EventAdapter' do
   it 'should convert PullRequestReviewCommentEvent' do
     original_event_hash = {
       type: 'PullRequestReviewCommentEvent',
@@ -24,7 +24,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
@@ -51,7 +51,7 @@ RSpec.describe 'Github::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.created_at = Time.parse(original_event.created_at)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
@@ -77,7 +77,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
@@ -103,7 +103,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
@@ -125,7 +125,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
@@ -147,7 +147,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'github'
@@ -167,7 +167,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
 
     expect(actual_events).to be_empty
   end
@@ -181,7 +181,7 @@ RSpec.describe 'Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Github::EventAdapter.from([original_event])
+    actual_events = DailyReportGenerator::Source::Github::EventAdapter.from([original_event])
 
     expect(actual_events).to be_empty
   end
