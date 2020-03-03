@@ -21,7 +21,10 @@ module Roko
 
         def fetch
           events = Events.new(@client).fetch
-          EventAdapter.from(events)
+          EventAdapter
+            .from(events)
+            .filter { |e| e.created_at.between?(@start, @end) }
+            .sort_by(&:created_at)
         end
       end
     end
