@@ -32,10 +32,7 @@ module Roko
         end
 
         def all
-          github_events = github
-          google_calendar_events = google_calendar
-          slack_events = slack
-          (github_events + google_calendar_events + slack).sort_by(&:created_at)
+          (github + google_calendar + slack + confluence).sort_by(&:created_at)
         end
       end
     end
