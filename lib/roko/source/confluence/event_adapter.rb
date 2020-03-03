@@ -21,7 +21,7 @@ module Roko
           # @return [Roko::ReportEvent] or nil
           def from_event(event)
             created_at = Time.parse(event.metadata.currentuser.lastmodified.version.when)
-            url = "https://#{ENV['CONFLUENCE_HOST']}#{ENV['CONFLUENCE_API_PATH']}#{event._links.webui}"
+            url = "#{ENV['CONFLUENCE_URL']}#{event._links.webui}"
 
             Roko::ReportEvent.new(
               'confluence',

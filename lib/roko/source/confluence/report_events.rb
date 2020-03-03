@@ -13,7 +13,7 @@ module Roko
 
         def initialize(configurable = nil)
           configure_with(configurable) unless configurable.nil?
-          @client = Faraday.new(url: 'https://' + ENV['CONFLUENCE_HOST']) do |conn|
+          @client = Faraday.new(url: ENV['CONFLUENCE_URL']) do |conn|
             conn.basic_auth(ENV['CONFLUENCE_USER'], ENV['CONFLUENCE_PASSWORD'])
             conn.response :json, parser_options: { object_class: OpenStruct }
           end

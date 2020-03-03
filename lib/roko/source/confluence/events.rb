@@ -14,7 +14,7 @@ module Roko
 
         def fetch
           response = @client.get(
-            ENV['CONFLUENCE_API_PATH'] + '/rest/api/content/search', {
+            ENV['CONFLUENCE_URL'] + '/rest/api/content/search', {
               expand: 'container,metadata.currentuser.lastmodified',
               cql: 'type in (page,blogpost) and id in recentlyModifiedPagesAndBlogPostsByUser(currentUser(), 0, 20)'
             }
