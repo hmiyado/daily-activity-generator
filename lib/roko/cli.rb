@@ -32,7 +32,7 @@ module Roko
     def confluence
       Roko::Source::Events.setup
       events = Roko::Source::Events.confluence
-      p events
+      pp events
       # events.map { |event| puts event.oneline }
     end
 

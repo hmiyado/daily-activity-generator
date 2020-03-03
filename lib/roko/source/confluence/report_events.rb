@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'events'
+require_relative 'event_adapter'
 require 'roko/source/configurable'
 
 module Roko
@@ -14,12 +15,13 @@ module Roko
           configure_with(configurable) unless configurable.nil?
           @client = Faraday.new(url: 'https://' + ENV['CONFLUENCE_HOST']) do |conn|
             conn.basic_auth(ENV['CONFLUENCE_USER'], ENV['CONFLUENCE_PASSWORD'])
-            conn.response :json
+            conn.response :json, parser_options: { object_class: OpenStruct }
           end
         end
 
         def fetch
-          Events.new(@client).fetch
+          events = Events.new(@client).fetch
+          EventAdapter.from(events)
         end
       end
     end

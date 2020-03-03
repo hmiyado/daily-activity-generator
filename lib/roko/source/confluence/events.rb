@@ -13,10 +13,13 @@ module Roko
         end
 
         def fetch
-          @client.get(ENV['CONFLUENCE_API_PATH'] + '/rest/api/content/search', {
-                        expand: 'container,metadata.currentuser.lastmodified',
-                        cql: 'type in (page,blogpost) and id in recentlyModifiedPagesAndBlogPostsByUser(currentUser(), 0, 20)'
-                      })
+          response = @client.get(
+            ENV['CONFLUENCE_API_PATH'] + '/rest/api/content/search', {
+              expand: 'container,metadata.currentuser.lastmodified',
+              cql: 'type in (page,blogpost) and id in recentlyModifiedPagesAndBlogPostsByUser(currentUser(), 0, 20)'
+            }
+          )
+          response.body.results
         end
       end
     end
