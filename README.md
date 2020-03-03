@@ -24,19 +24,22 @@ Or install it yourself as:
 
 Service | environment variable | description
 :-- | :-- | :-- 
-Github | - | No environment variable. Use `~/.netrc` by default.
+Github | `NETRC_FILE_PATH` | Path for netrc file.
 Google Calendar | `GOOGLE_API_CREDENTIALS_PATH` | Path for google api credentials file.
 Slack | `SLACK_API_TOKEN` | Slack API token.
 
 #### Github
 
-Write `~/.netrc` like below.
+Write netrc file like below.
 
 ```
 machine api.github.com
   login your_username
   password password_or_your_api_token
 ```
+
+Set the netrc file's path imn environment variable `NETRC_FILE_PATH`.
+Or use `~/.netrc` by default.
 
 ### Google Calendar
 

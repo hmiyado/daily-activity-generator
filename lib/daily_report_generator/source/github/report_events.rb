@@ -14,10 +14,12 @@ module DailyReportGenerator
 
         def initialize(configurable)
           configure_with(configurable)
+          octokit = Octokit::Client.new(netrc: true)
+          octokit.netrc = ENV['NETRC_FILE_PATH'] || '~/.netrc'
         end
 
         def fetch
-          octokit = Octokit::Client.new(netrc: true)
+
           github_events = Events.new(octokit).fetch
           EventAdapter.from(github_events).filter do |event|
             created_at_local = event.created_at.getlocal
