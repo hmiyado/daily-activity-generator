@@ -41,7 +41,7 @@ machine api.github.com
 Set the netrc file's path imn environment variable `NETRC_FILE_PATH`.
 Or use `~/.netrc` by default.
 
-### Google Calendar
+#### Google Calendar
 
 Create your service account and download a credential file.
 
@@ -50,7 +50,7 @@ see: https://cloud.google.com/docs/authentication/getting-started?hl=en
 Set the credential file's path in environment variable `GOOGLE_API_CREDENTIALS_PATH`.
 Or use `~/credentials.json` by default.
 
-### Slack
+#### Slack
 
 Set your slack API access token as environment variable `SLACK_API_TOKEN`.
 
