@@ -5,6 +5,7 @@ require 'pry'
 require 'roko/source/github/report_events'
 require 'roko/source/google_calendar/report_events'
 require 'roko/source/slack/report_events'
+require 'roko/source/confluence/report_events'
 require_relative 'configurable'
 
 module Roko
@@ -24,6 +25,10 @@ module Roko
 
         def slack
           Slack::ReportEvents.new(self).fetch
+        end
+
+        def confluence
+          Confluence::ReportEvents.new(self).fetch
         end
 
         def all
