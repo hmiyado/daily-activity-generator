@@ -9,17 +9,9 @@ module Roko
       # convert from Confluence event to [Roko::ReportEvent]
       module EventAdapter
         class << self
-          # @param event [Array<Sawyer::Resource>]
-          # @return [Array<Roko::ReportEvent>]
-          def from(events)
-            events.map! { |event| from_event(event) }.compact
-          end
-
-          private
-
           # @param event [Hash]
           # @return [Roko::ReportEvent] or nil
-          def from_event(event)
+          def to_report_event(event)
             created_at = Time.parse(event.metadata.currentuser.lastmodified.version.when)
             url = "#{ENV['CONFLUENCE_URL']}#{event._links.webui}"
 

@@ -12,7 +12,7 @@ RSpec.describe 'Source::Confluence::EventAdapter' do
         currentuser: {
           lastmodified: {
             version: {
-              "when" => '2020-02-25T22:10:35.008+09:00'
+              when: '2020-02-25T22:10:35.008+09:00'
             }
           }
         }
@@ -23,8 +23,7 @@ RSpec.describe 'Source::Confluence::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Confluence::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Confluence::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'confluence'
     expect(actual_event.event_type).to eq 'document'
