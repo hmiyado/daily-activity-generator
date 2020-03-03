@@ -2,30 +2,28 @@
 
 require 'octokit'
 
-require_relative 'events'
 require_relative 'event_adapter'
-require 'roko/source/configurable'
+require 'roko/source/base/report_events'
 
 module Roko
   module Source
     module Github
-      class ReportEvents
-        include Roko::Source::Configurable
-
-        def initialize(configurable)
-          configure_with(configurable)
+      # report events from github
+      class ReportEvents < Roko::Source::Base::ReportEvents
+        def client
           Octokit.configure do |c|
             c.netrc_file = ENV['NETRC_FILE_PATH'] || '~/.netrc'
+            c.auto_paginate = true
           end
-          @octokit = Octokit::Client.new(netrc: true)
+          Octokit::Client.new(netrc: true)
         end
 
-        def fetch
-          github_events = Events.new(@octokit).fetch
-          EventAdapter.from(github_events).filter do |event|
-            created_at_local = event.created_at.getlocal
-            created_at_local.between?(@start, @end)
-          end
+        def fetch_service_event(client)
+          client.user_events(client.login)
+        end
+
+        def to_report_event(event)
+          EventAdapter.to_report_event(event)
         end
       end
     end

@@ -9,29 +9,15 @@ module Roko
       # convert from Github event [Sawyer::Resource] to [Roko::ReportEvent]
       module EventAdapter
         class << self
-          # @param event [Array<Sawyer::Resource>]
-          # @return [Array<Roko::ReportEvent>]
-          def from(events)
-            events.map! { |event| from_event(event) }.compact
-          end
-
-          private
-
           # @param event [Sawyer::Resource]
           # @return [Roko::ReportEvent] or nil
-          def from_event(event)
-            source = 'github'
+          def to_report_event(event)
             created_at = extract_created_at(event)
-            return nil if created_at.nil?
-
-            payload = extract_from_payload(
-              event.type,
-              event.payload
-            )
-            return nil if payload.nil?
+            payload = extract_from_payload(event.type, event.payload)
+            return nil if payload.nil? || created_at.nil?
 
             Roko::ReportEvent.new(
-              source,
+              'github',
               payload[:event_type],
               created_at,
               payload[:url],

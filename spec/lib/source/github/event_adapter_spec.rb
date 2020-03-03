@@ -24,8 +24,7 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'github'
     expect(actual_event.event_type).to eq 'PR review'
@@ -51,8 +50,7 @@ RSpec.describe 'Source::Github::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.created_at = Time.parse(original_event.created_at)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'github'
     expect(actual_event.event_type).to eq 'PR open'
@@ -77,8 +75,7 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'github'
     expect(actual_event.event_type).to eq 'PR open'
@@ -103,8 +100,7 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'github'
     expect(actual_event.event_type).to eq 'PR closed'
@@ -125,8 +121,7 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'github'
     expect(actual_event.event_type).to eq 'create'
@@ -147,8 +142,7 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'github'
     expect(actual_event.event_type).to eq 'delete'
@@ -167,9 +161,9 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_events).to be_empty
+    expect(actual_event).to be_nil
   end
 
   it 'should not convert unknown event' do
@@ -181,8 +175,8 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::Github::EventAdapter.from([original_event])
+    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_events).to be_empty
+    expect(actual_event).to be_nil
   end
 end
