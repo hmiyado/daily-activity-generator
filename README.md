@@ -27,6 +27,7 @@ Service | environment variable | description
 Github | `NETRC_FILE_PATH` | Path for netrc file.
 Google Calendar | `GOOGLE_API_CREDENTIALS_PATH` | Path for google api credentials file.
 Slack | `SLACK_API_TOKEN` | Slack API token.
+Confluence | `CONFLUENCE_USER`<br>`CONFLUENCE_PASSWORD`<br>`CONFLUENCE_URL`  | User and password for confluence.
 
 #### Github
 
@@ -53,6 +54,12 @@ Or use `~/credentials.json` by default.
 #### Slack
 
 Set your slack API access token as environment variable `SLACK_API_TOKEN`.
+
+#### Confluence
+
+Set your user name and password as environment variable `CONFLUENCE_USER`, `CONFLUENCE_PASSWORD`.
+
+This gem access `CONFLUENCE_URL` as confluence host.
 
 ## Usage
 

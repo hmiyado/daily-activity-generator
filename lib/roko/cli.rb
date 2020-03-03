@@ -28,6 +28,13 @@ module Roko
       events.map { |event| puts event.oneline }
     end
 
+    desc 'confluence', 'generate confluence report'
+    def confluence
+      Roko::Source::Events.setup
+      events = Roko::Source::Events.confluence
+      events.map { |event| puts event.oneline }
+    end
+
     desc 'today', 'generate today report'
     def today
       Roko::Source::Events.today
