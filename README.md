@@ -20,9 +20,17 @@ Or install it yourself as:
 
     $ gem install daily_report_generator
 
-### for Github
+### Authenticate each services
 
-Write `~/.netrc`
+Service | environment variable | description
+:-- | :-- | :-- 
+Github | - | No environment variable. Use `~/.netrc` by default.
+Google Calendar | `GOOGLE_API_CREDENTIALS_PATH` | Path for google api credentials file.
+Slack | `SLACK_API_TOKEN` | Slack API token.
+
+#### Github
+
+Write `~/.netrc` like below.
 
 ```
 machine api.github.com
@@ -30,14 +38,18 @@ machine api.github.com
   password password_or_your_api_token
 ```
 
-### for Google Calendar
+### Google Calendar
 
-Create your service account and download credential file in `~/credentials.json`
+Create your service account and download a credential file.
+
 see: https://cloud.google.com/docs/authentication/getting-started?hl=en
 
-### for Slack
+Set the credential file's path in environment variable `GOOGLE_API_CREDENTIALS_PATH`.
+Or use `~/credentials.json` by default.
 
-Set your slack access token as environment variable `SLACK_API_TOKEN`
+### Slack
+
+Set your slack API access token as environment variable `SLACK_API_TOKEN`.
 
 ## Usage
 

@@ -13,7 +13,7 @@ module DailyReportGenerator
     module GoogleCalendar
       OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
       APPLICATION_NAME = 'hmiyado/daily_report_generator'
-      CREDENTIALS_PATH = '~/credentials.json'
+      CREDENTIALS_PATH = ENV['GOOGLE_API_CREDENTIALS_PATH'] || '~/credentials.json'
       # The file token.yaml stores the user's access and refresh tokens, and is
       # created automatically when the authorization flow completes for the first
       # time.
