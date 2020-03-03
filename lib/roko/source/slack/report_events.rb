@@ -2,7 +2,6 @@
 
 require 'slack-ruby-client'
 
-require_relative 'events'
 require_relative 'event_adapter'
 require 'roko/source/base/report_events'
 

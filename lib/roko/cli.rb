@@ -35,11 +35,12 @@ module Roko
       events.map { |event| puts event.oneline }
     end
 
-    desc 'today', 'generate today report'
-    def today
+    desc 'all', 'generate today report'
+    def all
       Roko::Source::Events.today
       today_events = Roko::Source::Events.all
       today_events.map { |event| puts event.oneline }
     end
+    map today: :all
   end
 end
