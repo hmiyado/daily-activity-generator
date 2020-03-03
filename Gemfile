@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in daily_report_generator.gemspec
+# Specify your gem's dependencies in roko.gemspec
 gemspec
 
 gem "rspec", "~> 3.0"

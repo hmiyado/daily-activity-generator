@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'daily_report_generator/report_event'
+require 'roko/report_event'
 require 'time'
 
-module DailyReportGenerator
+module Roko
   module Source
     module Slack
       module EventAdapter
         MAX_SUMMARY_TEXT_LENGTH=20
         class << self
           # @param events [Array<Slack::Messages::Message>]
-          # @return [Array<DailyReportGenerator::ReportEvent>]
+          # @return [Array<Roko::ReportEvent>]
           def from(events)
             events.map! { |event| from_event(event) }.compact
           end
@@ -18,7 +18,7 @@ module DailyReportGenerator
           private
 
           # @param event [Slack::Messages::Message]
-          # @return [DailyReportGenerator::ReportEvent]
+          # @return [Roko::ReportEvent]
           def from_event(event)
             source = 'slack'
             event_type = 'comment'
@@ -36,7 +36,7 @@ module DailyReportGenerator
               
             summary = "in ##{event.channel.name} \"#{summary_text}\""
             detail = text
-            DailyReportGenerator::ReportEvent.new(source, event_type, created_at, url, summary, detail)
+            Roko::ReportEvent.new(source, event_type, created_at, url, summary, detail)
           end
         end
       end

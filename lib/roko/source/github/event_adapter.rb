@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'daily_report_generator/report_event'
+require 'roko/report_event'
 require 'time'
 
-module DailyReportGenerator
+module Roko
   module Source
     module Github
-      # convert from Github event [Sawyer::Resource] to [DailyReportGenerator::ReportEvent]
+      # convert from Github event [Sawyer::Resource] to [Roko::ReportEvent]
       module EventAdapter
         class << self
           # @param event [Array<Sawyer::Resource>]
-          # @return [Array<DailyReportGenerator::ReportEvent>]
+          # @return [Array<Roko::ReportEvent>]
           def from(events)
             events.map! { |event| from_event(event) }.compact
           end
@@ -18,7 +18,7 @@ module DailyReportGenerator
           private
 
           # @param event [Sawyer::Resource]
-          # @return [DailyReportGenerator::ReportEvent] or nil
+          # @return [Roko::ReportEvent] or nil
           def from_event(event)
             source = 'github'
             created_at = extract_created_at(event)
@@ -30,7 +30,7 @@ module DailyReportGenerator
             )
             return nil if payload.nil?
 
-            DailyReportGenerator::ReportEvent.new(
+            Roko::ReportEvent.new(
               source,
               payload[:event_type],
               created_at,

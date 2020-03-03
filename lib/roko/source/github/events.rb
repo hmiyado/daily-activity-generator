@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DailyReportGenerator
+module Roko
   module Source
     module Github
       # access github events

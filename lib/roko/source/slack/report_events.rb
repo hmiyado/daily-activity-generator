@@ -4,16 +4,16 @@ require 'slack-ruby-client'
 
 require_relative 'events'
 require_relative 'event_adapter'
-require 'daily_report_generator/source/configurable'
+require 'roko/source/configurable'
 
 # alias for Slack module defined in slack-ruby-client
 SlackClient=Slack
 
-module DailyReportGenerator
+module Roko
   module Source
     module Slack
       class ReportEvents
-        include DailyReportGenerator::Source::Configurable
+        include Roko::Source::Configurable
 
         def initialize(configurable)
           configure_with(configurable) unless configurable.nil?

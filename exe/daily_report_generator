@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'daily_report_generator/cli'
-
-DailyReportGenerator::Cli.start

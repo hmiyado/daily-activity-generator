@@ -2,12 +2,12 @@
 
 require 'time'
 require 'pry'
-require 'daily_report_generator/source/github/report_events'
-require 'daily_report_generator/source/google_calendar/report_events'
-require 'daily_report_generator/source/slack/report_events'
+require 'roko/source/github/report_events'
+require 'roko/source/google_calendar/report_events'
+require 'roko/source/slack/report_events'
 require_relative 'configurable'
 
-module DailyReportGenerator
+module Roko
   module Source
     # daily report events from several sources
     module Events

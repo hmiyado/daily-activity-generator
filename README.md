@@ -1,6 +1,6 @@
-# DailyReportGenerator
+# Roko
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/daily_report_generator`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/roko`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'daily_report_generator'
+gem 'roko'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install daily_report_generator
+    $ gem install roko
 
 ### Authenticate each services
 
@@ -57,7 +57,7 @@ Set your slack API access token as environment variable `SLACK_API_TOKEN`.
 ## Usage
 
 ```
-$ bundle exec ruby exec/daily_report_generator help
+$ bundle exec ruby exec/roko help
 ```
 
 ## Development
@@ -66,5 +66,5 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/hmiyado/daily_report_generator.
+Bug reports and pull requests are welcome on GitHub at https://github.com/hmiyado/roko.
 

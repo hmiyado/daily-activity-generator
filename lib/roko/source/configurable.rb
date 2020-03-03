@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DailyReportGenerator
+module Roko
   module Source
     # @!attribute start
     #   @return [Time] start time of this report
@@ -18,7 +18,7 @@ module DailyReportGenerator
         today
       end
 
-      # @param configurable [DailyReportGenerator::Source::Configurable]
+      # @param configurable [Roko::Source::Configurable]
       def configure_with(configurable)
         @start = configurable.start
         @end = configurable.end

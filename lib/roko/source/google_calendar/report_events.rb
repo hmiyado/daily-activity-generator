@@ -2,13 +2,13 @@
 
 require_relative 'events'
 require_relative 'event_adapter'
-require 'daily_report_generator/source/configurable'
+require 'roko/source/configurable'
 
-module DailyReportGenerator
+module Roko
   module Source
     module GoogleCalendar
       class ReportEvents
-        include DailyReportGenerator::Source::Configurable
+        include Roko::Source::Configurable
 
         def initialize(configurable)
           configure_with(configurable)

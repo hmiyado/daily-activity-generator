@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'daily_report_generator/report_event'
+require 'roko/report_event'
 require 'time'
 
-module DailyReportGenerator
+module Roko
   module Source
     module GoogleCalendar
       module EventAdapter
         class << self
           # @param events [Array<Google::Apis::CalendarV3::Event>]
-          # @return [Array<DailyReportGenerator::ReportEvent>]
+          # @return [Array<Roko::ReportEvent>]
           def from(events)
             events.map! { |event| from_event(event) }.compact
           end
@@ -17,7 +17,7 @@ module DailyReportGenerator
           private
 
           # @param event [Google::Apis::CalendarV3::Event]
-          # @return [DailyReportGenerator::ReportEvent]
+          # @return [Roko::ReportEvent]
           def from_event(event)
             source = 'google calendar'
             event_type = 'MTG'
@@ -34,7 +34,7 @@ module DailyReportGenerator
             url = event.html_link
             summary = event.summary
             detail = event.description
-            DailyReportGenerator::ReportEvent.new(source, event_type, created_at, url, summary, detail)
+            Roko::ReportEvent.new(source, event_type, created_at, url, summary, detail)
           end
         end
       end

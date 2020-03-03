@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'roko/cli'
+
+Roko::Cli.start

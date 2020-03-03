@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'daily_report_generator/source/google_calendar/event_adapter'
+require 'roko/source/google_calendar/event_adapter'
 require 'ostruct'
 require 'json'
 
@@ -19,7 +19,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.start.date_time = DateTime.parse(original_event.start.date_time)
 
-    actual_events = DailyReportGenerator::Source::GoogleCalendar::EventAdapter.from([original_event])
+    actual_events = Roko::Source::GoogleCalendar::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'google calendar'
@@ -42,7 +42,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.start.date = Date.parse(original_event.start.date)
 
-    actual_events = DailyReportGenerator::Source::GoogleCalendar::EventAdapter.from([original_event])
+    actual_events = Roko::Source::GoogleCalendar::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'google calendar'
@@ -61,7 +61,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Source::GoogleCalendar::EventAdapter.from([original_event])
+    actual_events = Roko::Source::GoogleCalendar::EventAdapter.from([original_event])
 
     expect(actual_events).to be_empty
   end

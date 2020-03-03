@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DailyReportGenerator
+module Roko
   # ReportEvent defines event format that should be reported.
   class ReportEvent
     attr_reader :source, :event_type, :created_at, :url, :summary, :detail

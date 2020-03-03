@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'daily_report_generator/source/slack/event_adapter'
+require 'roko/source/slack/event_adapter'
 require 'ostruct'
 require 'json'
 
@@ -17,7 +17,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Source::Slack::EventAdapter.from([original_event])
+    actual_events = Roko::Source::Slack::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.source).to eq 'slack'
@@ -39,7 +39,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = DailyReportGenerator::Source::Slack::EventAdapter.from([original_event])
+    actual_events = Roko::Source::Slack::EventAdapter.from([original_event])
     actual_event = actual_events[0]
 
     expect(actual_event.summary).to eq 'in #channel_name "This is so long text..."'

@@ -1,14 +1,14 @@
-require_relative 'lib/daily_report_generator/version'
+require_relative 'lib/roko/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "daily_report_generator"
-  spec.version       = DailyReportGenerator::VERSION
+  spec.name          = "roko"
+  spec.version       = Roko::VERSION
   spec.authors       = ["miyado"]
   spec.email         = ["hmiyado@gmail.com"]
 
   spec.summary       = %q{generate daily activity.}
   spec.description   = %q{generate daily activity report such as github, slack, jira, confluence}
-  spec.homepage      = "https://github.com/hmiyado/daily_activity_generator"
+  spec.homepage      = "https://github.com/hmiyado/roko"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
