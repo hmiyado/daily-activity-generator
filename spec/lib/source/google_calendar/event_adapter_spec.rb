@@ -19,8 +19,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.start.date_time = DateTime.parse(original_event.start.date_time)
 
-    actual_events = Roko::Source::GoogleCalendar::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'google calendar'
     expect(actual_event.event_type).to eq 'MTG'
@@ -42,8 +41,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.start.date = Date.parse(original_event.start.date)
 
-    actual_events = Roko::Source::GoogleCalendar::EventAdapter.from([original_event])
-    actual_event = actual_events[0]
+    actual_event = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
 
     expect(actual_event.source).to eq 'google calendar'
     expect(actual_event.event_type).to eq 'MTG'
@@ -61,8 +59,7 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_events = Roko::Source::GoogleCalendar::EventAdapter.from([original_event])
-
-    expect(actual_events).to be_empty
+    actual_event = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
+    expect(actual_event).to be_nil
   end
 end

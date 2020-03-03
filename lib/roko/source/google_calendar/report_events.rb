@@ -1,25 +1,30 @@
 # frozen_string_literal: true
 
-require_relative 'events'
+require_relative 'client'
 require_relative 'event_adapter'
-require 'roko/source/configurable'
+require 'roko/source/base/report_events'
 
 module Roko
   module Source
     module GoogleCalendar
-      class ReportEvents
-        include Roko::Source::Configurable
-
-        def initialize(configurable)
-          configure_with(configurable)
+      # report events from google calendar
+      class ReportEvents < Roko::Source::Base::ReportEvents
+        def client
+          Client.new_client
         end
 
-        def fetch
-          events = Events.new.fetch(
-            DateTime.parse(@start.to_s).rfc3339,
-            DateTime.parse(@end.to_s).rfc3339
-          )
-          EventAdapter.from(events.items)
+        def fetch_service_event(client)
+          client
+            .list_events(
+              'primary',
+              time_min: DateTime.parse(@start.to_s).rfc3339,
+              time_max: DateTime.parse(@end.to_s).rfc3339
+            )
+            .items
+        end
+
+        def to_report_event(event)
+          EventAdapter.to_report_event(event)
         end
       end
     end

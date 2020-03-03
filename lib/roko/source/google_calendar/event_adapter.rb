@@ -8,17 +8,9 @@ module Roko
     module GoogleCalendar
       module EventAdapter
         class << self
-          # @param events [Array<Google::Apis::CalendarV3::Event>]
-          # @return [Array<Roko::ReportEvent>]
-          def from(events)
-            events.map! { |event| from_event(event) }.compact
-          end
-
-          private
-
           # @param event [Google::Apis::CalendarV3::Event]
           # @return [Roko::ReportEvent]
-          def from_event(event)
+          def to_report_event(event)
             source = 'google calendar'
             event_type = 'MTG'
             # [Google::Apis::CalendarV3::EventDateTime]
