@@ -14,8 +14,10 @@ module Roko
 
         def initialize(configurable)
           configure_with(configurable)
+          Octokit.configure do |c|
+            c.netrc_file = ENV['NETRC_FILE_PATH'] || '~/.netrc'
+          end
           @octokit = Octokit::Client.new(netrc: true)
-          @octokit.netrc = ENV['NETRC_FILE_PATH'] || '~/.netrc'
         end
 
         def fetch

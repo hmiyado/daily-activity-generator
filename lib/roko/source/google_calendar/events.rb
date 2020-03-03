@@ -43,6 +43,7 @@ module Roko
         private
 
         def authorize
+          Dir.mkdir('tmp') unless Dir.exist?('tmp')
           client_id = Google::Auth::ClientId.from_file File.expand_path(CREDENTIALS_PATH)
           token_store = Google::Auth::Stores::FileTokenStore.new file: TOKEN_PATH
           authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store
@@ -52,7 +53,7 @@ module Roko
             url = authorizer.get_authorization_url base_url: OOB_URI
             puts 'Open the following URL in the browser and enter the ' \
                  "resulting code after authorization:\n" + url
-            code = gets
+            code = STDIN.gets
             credentials = authorizer.get_and_store_credentials_from_code(
               user_id: user_id, code: code, base_url: OOB_URI
             )
