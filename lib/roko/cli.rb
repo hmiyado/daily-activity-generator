@@ -21,6 +21,13 @@ module Roko
       google_calendar_events.each { |event| puts event.oneline }
     end
 
+    desc 'jira', 'generate jira report'
+    def jira
+      Roko::Source::Events.setup
+      events = Roko::Source::Events.jira
+      events.each { |event| puts event.oneline }
+    end
+
     desc 'slack', 'generate slack report'
     def slack
       Roko::Source::Events.setup
