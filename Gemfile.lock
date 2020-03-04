@@ -15,6 +15,8 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.0)
+    atlassian-jwt (0.2.0)
+      jwt (~> 2.1.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -65,7 +67,12 @@ GEM
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jaro_winkler (1.5.4)
-    jwt (2.2.1)
+    jira-ruby (1.7.1)
+      activesupport
+      atlassian-jwt
+      multipart-post
+      oauth (~> 0.5, >= 0.5.0)
+    jwt (2.1.0)
     kwalify (0.7.2)
     maruku (0.7.3)
     memoist (0.16.2)
@@ -76,14 +83,15 @@ GEM
     multi_json (1.14.1)
     multipart-post (2.1.1)
     netrc (0.11.0)
-    nokogiri (1.10.8)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    oauth (0.5.4)
     octokit (4.16.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     os (1.0.1)
     parallel (1.19.1)
-    parser (2.7.0.2)
+    parser (2.7.0.4)
       ast (~> 2.4.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -121,7 +129,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
-    rubocop (0.80.0)
+    rubocop (0.80.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
@@ -175,7 +183,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
     yard (0.9.24)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
@@ -183,6 +191,7 @@ PLATFORMS
 DEPENDENCIES
   faraday (~> 1.0)
   google-api-client (~> 0.34)
+  jira-ruby (~> 1.7.1)
   netrc (~> 0.11.0)
   octokit (~> 4.0)
   pry (~> 0.12.2)
