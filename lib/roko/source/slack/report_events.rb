@@ -21,19 +21,32 @@ module Roko
         end
 
         def fetch_service_event(client)
-          date = @start.strftime('%Y/%m/%d')
-          result = client.auth_test
-          client
-            .search_messages({
-                               query: "from:@#{result.user} on:#{date}",
-                               sort: 'timestamp'
-                             })
-            .messages
-            .matches
+          user = my_user(client)
+          after = Date.parse(@start.to_s).prev_day.to_s
+          before = Date.parse(@end.to_s).to_s
+          query = "from:@#{user} after:#{after} before:#{before}"
+          search_messages(client, query)
         end
 
         def to_report_event(event)
           EventAdapter.to_report_event(event)
+        end
+
+        private
+
+        def my_user(client)
+          client.auth_test.user
+        end
+
+        def search_messages(client, query)
+          client
+            .search_messages({
+                               query: query,
+                               count: 100,
+                               sort: 'timestamp'
+                             })
+            .messages
+            .matches
         end
       end
     end
