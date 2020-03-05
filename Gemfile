@@ -6,6 +6,7 @@ gemspec
 gem "rspec", "~> 3.0"
 gem "octokit", "~> 4.0"
 gem 'google-api-client', '~> 0.34'
+gem 'jira-ruby', '~> 1.7.1'
 gem 'slack-ruby-client', '~> 0.14.5'
 gem 'faraday', '~> 1.0'
 gem 'pry', '~> 0.12.2'

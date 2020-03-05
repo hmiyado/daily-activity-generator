@@ -5,7 +5,7 @@ require 'roko/source/slack/event_adapter'
 require 'ostruct'
 require 'json'
 
-RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
+RSpec.describe 'Source::Slack::EventAdapter' do
   it 'should convert slack events' do
     original_event_hash = {
       channel: {
