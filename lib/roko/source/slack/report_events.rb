@@ -2,6 +2,7 @@
 
 require 'slack-ruby-client'
 
+require_relative 'events'
 require_relative 'event_adapter'
 require 'roko/source/base/report_events'
 
@@ -21,15 +22,7 @@ module Roko
         end
 
         def fetch_service_event(client)
-          date = @start.strftime('%Y/%m/%d')
-          result = client.auth_test
-          client
-            .search_messages({
-                               query: "from:@#{result.user} on:#{date}",
-                               sort: 'timestamp'
-                             })
-            .messages
-            .matches
+          Events.new(client).fetch(@start.to_s, @end.to_s)
         end
 
         def to_report_event(event)
