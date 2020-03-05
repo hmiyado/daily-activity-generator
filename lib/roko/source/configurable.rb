@@ -30,6 +30,8 @@ module Roko
         Time.parse(str)
       rescue ArgumentError
         nil
+      rescue TypeError
+        nil
       end
     end
   end
