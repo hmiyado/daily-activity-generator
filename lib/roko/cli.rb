@@ -4,50 +4,66 @@ require 'thor'
 require 'roko/source/events'
 
 module Roko
+  # cli definitions
   class Cli < Thor
     package_name 'daily report generator'
+    class_option :from,
+                 banner: 'YYYY/mm/dd',
+                 type: :string,
+                 desc: 'start date of report'
+    class_option :to,
+                 banner: 'YYYY/mm/dd',
+                 type: :string,
+                 desc: 'end date of report'
 
     desc 'github', 'generate github daily report'
     def github
-      Roko::Source::Events.setup
+      setup_configuration
       github_events = Roko::Source::Events.github
       github_events.each { |event| puts event.oneline }
     end
 
     desc 'google_calendar', 'generate google calendar report'
     def google_calendar
-      Roko::Source::Events.setup
+      setup_configuration
       google_calendar_events = Roko::Source::Events.google_calendar
       google_calendar_events.each { |event| puts event.oneline }
     end
 
     desc 'jira', 'generate jira report'
     def jira
-      Roko::Source::Events.setup
+      setup_configuration
       events = Roko::Source::Events.jira
       events.each { |event| puts event.oneline }
     end
 
     desc 'slack', 'generate slack report'
     def slack
-      Roko::Source::Events.setup
+      setup_configuration
       events = Roko::Source::Events.slack
       events.map { |event| puts event.oneline }
     end
 
     desc 'confluence', 'generate confluence report'
     def confluence
-      Roko::Source::Events.setup
+      setup_configuration
       events = Roko::Source::Events.confluence
       events.map { |event| puts event.oneline }
     end
 
-    desc 'all', 'generate today report'
+    desc 'all', 'generate report'
     def all
-      Roko::Source::Events.today
+      setup_configuration
+
       today_events = Roko::Source::Events.all
       today_events.map { |event| puts event.oneline }
     end
     map today: :all
+
+    private
+
+    def setup_configuration
+      Source::Events.setup(options)
+    end
   end
 end
