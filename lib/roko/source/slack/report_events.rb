@@ -22,7 +22,7 @@ module Roko
         end
 
         def fetch_service_event(client)
-          Events.new(client).fetch
+          Events.new(client).fetch(@start.to_s, @end.to_s)
         end
 
         def to_report_event(event)
