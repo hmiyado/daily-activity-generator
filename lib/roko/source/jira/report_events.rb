@@ -3,6 +3,8 @@
 require 'jira-ruby'
 require 'roko/source/base/report_events'
 
+require_relative 'event_adapter'
+
 module Roko
   module Source
     module Jira
@@ -36,8 +38,9 @@ module Roko
             " AND updatedDate < \"#{end_date}\""
         end
 
+        # @param event [JIRA::Resource::Issue]
         def to_report_event(event)
-          event
+          EventAdapter.to_report_event(event)
         end
       end
     end
