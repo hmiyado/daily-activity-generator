@@ -15,6 +15,8 @@ RSpec.describe 'ReportEvent' do
       'detail'
     )
 
+    allow(event).to receive(:oneline_template).and_return(Roko::DEFAULT_ONELINE_TEMPLATE)
+
     oneline = event.oneline
 
     expect(oneline).to eq '2000/01/01 12:34 eventtype [summary](https://url.com)'
@@ -30,8 +32,27 @@ RSpec.describe 'ReportEvent' do
       'detail\nwith\nlineseparators'
     )
 
+    allow(event).to receive(:oneline_template).and_return(Roko::DEFAULT_ONELINE_TEMPLATE)
+
     oneline = event.oneline
 
     expect(oneline).to eq '2000/01/01 12:34 eventtype [summary with lineseparators](https://url.com)'
+  end
+
+  it 'should change log template as defined in environment variable' do
+    event = Roko::ReportEvent.new(
+      'source',
+      'eventtype',
+      Time.parse('2000-01-01T12:34:56+09:00'),
+      'https://url.com',
+      "summary\nwith\nlineseparators",
+      'detail\nwith\nlineseparators'
+    )
+
+    ClimateControl.modify ROKO_ONELINE_TEMPLATE: 'env template' do
+      oneline = event.oneline
+
+      expect(oneline).to eq 'env template'
+    end
   end
 end
