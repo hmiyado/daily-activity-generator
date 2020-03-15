@@ -1,10 +1,13 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 
 # Specify your gem's dependencies in roko.gemspec
 gemspec
 
-gem "rspec", "~> 3.0"
-gem "octokit", "~> 4.0"
+gem 'rspec', '~> 3.0'
+gem 'climate_control', '~> 0.1.0'
+gem 'octokit', '~> 4.0'
 gem 'google-api-client', '~> 0.34'
 gem 'jira-ruby', '~> 1.7.1'
 gem 'slack-ruby-client', '~> 0.14.5'

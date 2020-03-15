@@ -26,6 +26,7 @@ GEM
     byebug (2.7.0)
       columnize (~> 0.3)
       debugger-linecache (~> 1.2)
+    climate_control (0.1.0)
     codeclimate-engine-rb (0.4.1)
       virtus (~> 1.0)
     coderay (1.1.2)
@@ -189,6 +190,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  climate_control (~> 0.1.0)
   faraday (~> 1.0)
   google-api-client (~> 0.34)
   jira-ruby (~> 1.7.1)

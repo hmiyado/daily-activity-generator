@@ -61,6 +61,23 @@ Set your user name and password as environment variable `CONFLUENCE_USER`, `CONF
 
 This gem access `CONFLUENCE_URL` as confluence host.
 
+## Report Template
+
+You can change report template to set `ROKO_ONELINE_TEMPLATE`.
+The template is looks like `%{Y}/%{m}/%{d} %{H}:%{M} %{event_type} [%{summary}](%{url})`.
+
+key | description
+:-- | :--
+`Y` | year
+`m` | month
+`d` | day
+`H` | hour of the day
+`M` | minute
+`event_type` | event type
+`summary` | the summary of the event
+`url` | url of this event
+`detail` | detail of this event
+
 ## Usage
 
 ```
