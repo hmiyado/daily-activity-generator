@@ -22,7 +22,8 @@ module Roko
 
     def oneline
       formatted_time = @created_at.getlocal.strftime('%Y/%m/%d %H:%M')
-      "#{formatted_time} #{@event_type} [#{summary}](#{@url})"
+      oneline_summary = @summary.gsub("\n", " ")
+      "#{formatted_time} #{@event_type} [#{oneline_summary}](#{@url})"
     end
   end
 end
