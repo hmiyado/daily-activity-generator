@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Roko
+  DEFAULT_ONELINE_TEMPLATE = '%{Y}/%{m}/%{d} %{H}:%{M} %{event_type} [%{summary}](%{url})'
+
   # ReportEvent defines event format that should be reported.
   class ReportEvent
     attr_reader :source, :event_type, :created_at, :url, :summary, :detail
@@ -21,9 +23,17 @@ module Roko
     end
 
     def oneline
-      formatted_time = @created_at.getlocal.strftime('%Y/%m/%d %H:%M')
       oneline_summary = @summary.gsub("\n", " ")
-      "#{formatted_time} #{@event_type} [#{oneline_summary}](#{@url})"
+      DEFAULT_ONELINE_TEMPLATE % {
+        Y: @created_at.year,
+        m: @created_at.strftime("%m"),
+        d: @created_at.strftime("%d"),
+        H: @created_at.hour,
+        M: @created_at.min,
+        event_type: @event_type,
+        summary: oneline_summary,
+        url: @url
+      }
     end
   end
 end
