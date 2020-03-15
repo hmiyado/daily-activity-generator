@@ -31,7 +31,7 @@ module Roko
 
     def oneline
       oneline_summary = @summary.gsub("\n", ' ')
-      format(oneline_template, Y: @created_at.year, m: @created_at.strftime('%m'), d: @created_at.strftime('%d'), H: @created_at.hour, M: @created_at.min, event_type: @event_type, summary: oneline_summary, url: @url)
+      format(oneline_template, Y: @created_at.year, m: @created_at.strftime('%m'), d: @created_at.strftime('%d'), H: @created_at.hour, M: @created_at.min, event_type: @event_type, summary: oneline_summary, url: @url, detail: @detail)
     end
   end
 end
