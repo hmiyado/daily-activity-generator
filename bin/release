@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+gem build roko.gemspec --output=release.gem
+gem push release.gem
+rm release.gem
