@@ -12,7 +12,10 @@ module Roko
       class ReportEvents < Roko::Source::Base::ReportEvents
         def client
           Octokit.configure do |c|
-            c.netrc_file = ENV['NETRC_FILE_PATH'] || '~/.netrc'
+            c.netrc_file = ENV.fetch(
+              'NETRC_FILE_PATH',
+              File.expand_path('~/.netrc')
+            )
             c.auto_paginate = true
           end
           Octokit::Client.new(netrc: true)
