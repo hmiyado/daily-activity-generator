@@ -30,8 +30,30 @@ module Roko
     end
 
     def oneline
+      format(oneline_template, time_hash.merge(content_hash))
+    end
+
+    private
+
+    def time_hash
+      time = @created_at.getlocal
+      {
+        Y: time.year,
+        m: time.strftime('%m'),
+        d: time.strftime('%d'),
+        H: time.strftime('%H'),
+        M: time.strftime('%M')
+      }
+    end
+
+    def content_hash
       oneline_summary = @summary.gsub("\n", ' ')
-      format(oneline_template, Y: @created_at.year, m: @created_at.strftime('%m'), d: @created_at.strftime('%d'), H: @created_at.hour, M: @created_at.min, event_type: @event_type, summary: oneline_summary, url: @url, detail: @detail)
+      {
+        event_type: @event_type,
+        summary: oneline_summary,
+        url: @url,
+        detail: @detail
+      }
     end
   end
 end
