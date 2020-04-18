@@ -1,26 +1,40 @@
 # frozen_string_literal: true
 
-require 'roko/report_event'
+require 'roko/report/event'
+require 'roko/report/entry'
 require 'time'
 
 module Roko
   module Source
     module Confluence
-      # convert from Confluence event to [Roko::ReportEvent]
+      # convert from Confluence event to [Roko::Report::Event]
       module EventAdapter
         class << self
           # @param event [Hash]
-          # @return [Roko::ReportEvent] or nil
+          # @return [Roko::Report::Event]
           def to_report_event(event)
-            created_at = Time.parse(event.metadata.currentuser.lastmodified.version.when)
-            url = "#{ENV['CONFLUENCE_URL']}#{event._links.webui}"
+            Roko::Report::Event.new(
+              'Confluence',
+              Time.parse(event.metadata.currentuser.lastmodified.version.when),
+              main_entry(event),
+              sub_entry
+            )
+          end
 
-            Roko::ReportEvent.new(
+          private
+
+          def main_entry(event)
+            Roko::Report::Entry.new(
               'confluence',
-              'document',
-              created_at,
-              url,
               event.title,
+              "#{ENV['CONFLUENCE_URL']}#{event._links.webui}"
+            )
+          end
+
+          def sub_entry
+            Roko::Report::Entry.new(
+              'edit',
+              '',
               ''
             )
           end
