@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'roko/report_event'
+require 'roko/report/event'
+require 'roko/report/entry'
 require 'time'
 
 module Roko
@@ -12,19 +13,18 @@ module Roko
           # @param event [JIRA::Resource::Issue]
           # @return [Roko::ReportEvent]
           def to_report_event(event)
-            source = 'jira'
-            event_type = 'ticket'
-
             key = event.attrs['key']
             url = "#{ENV['JIRA_URL']}#{ENV['JIRA_CONTEXT_PATH']}/browse/#{key}"
 
             fields = event.attrs['fields']
 
-            created_at = Time.parse(fields['updated'])
-
             summary = "[#{key}] #{fields['summary']}"
-            detail = fields['description']
-            Roko::ReportEvent.new(source, event_type, created_at, url, summary, detail)
+            Roko::Report::Event.new(
+              'JIRA',
+              Time.parse(fields['updated']),
+              Roko::Report::Entry.new('task', summary, url),
+              Roko::Report::Entry.new('edit', '', '')
+            )
           end
         end
       end
