@@ -7,7 +7,7 @@ require 'time'
 module Roko
   module Source
     module Github
-      # convert from Github event [Sawyer::Resource] to [Roko::ReportEvent]
+      # convert from Github event [Sawyer::Resource] to [Roko::Report::Event]
       module EventAdapter
         class << self
           # @param event [Sawyer::Resource]

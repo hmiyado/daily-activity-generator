@@ -11,7 +11,7 @@ module Roko
       module EventAdapter
         class << self
           # @param event [JIRA::Resource::Issue]
-          # @return [Roko::ReportEvent]
+          # @return [Roko::Report::Event]
           def to_report_event(event)
             key = event.attrs['key']
             url = "#{ENV['JIRA_URL']}#{ENV['JIRA_CONTEXT_PATH']}/browse/#{key}"

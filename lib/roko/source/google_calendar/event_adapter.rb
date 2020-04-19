@@ -10,7 +10,7 @@ module Roko
       module EventAdapter
         class << self
           # @param event [Google::Apis::CalendarV3::Event]
-          # @return [Roko::ReportEvent]
+          # @return [Roko::Report::Event]
           def to_report_event(event)
             # [Google::Apis::CalendarV3::EventDateTime]
             start = event.start

@@ -11,7 +11,7 @@ module Roko
       module EventAdapter
         class << self
           # @param event [Slack::Messages::Message]
-          # @return [Roko::ReportEvent]
+          # @return [Roko::Report::Event]
           def to_report_event(event)
             Roko::Report::Event.new(
               'Slack', Time.at(event.ts.to_i),
