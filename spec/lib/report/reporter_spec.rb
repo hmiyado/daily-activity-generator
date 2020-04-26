@@ -18,7 +18,7 @@ RSpec.describe 'Report::Reporter' do
       ),
       Roko::Report::Entry.new(
         'sub.type',
-        'sub.title',
+        'long long long long sub.title',
         'https://sub.url'
       )
     )
@@ -34,6 +34,6 @@ RSpec.describe 'Report::Reporter' do
 
     event_template = '%{sub_type} %{sub_title} %{sub_url}'
     allow(reporter).to receive(:format_template).and_return(event_template)
-    expect(reporter.format(event)).to eq('sub.type sub.title https://sub.url')
+    expect(reporter.format(event)).to eq('sub.type long long long long ... https://sub.url')
   end
 end

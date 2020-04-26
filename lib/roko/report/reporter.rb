@@ -4,6 +4,8 @@ require 'roko/report/configurable'
 
 module Roko
   module Report
+    MAX_SUMMARY_TEXT_LENGTH = 20
+
     class Reporter
       include Roko::Report::Configurable
 
@@ -22,8 +24,8 @@ module Roko
         {
           source: event.source
         }.merge(time_hash(event.created_at))
-        .merge(entry_hash(:main, event.main))
-        .merge(entry_hash(:sub, event.sub))
+          .merge(entry_hash(:main, event.main))
+          .merge(entry_hash(:sub, event.sub))
       end
 
       # @param time [Time]
@@ -45,9 +47,21 @@ module Roko
       def entry_hash(prefix, entry)
         {
           "#{prefix}_type".to_sym => entry.type,
-          "#{prefix}_title".to_sym => entry.title,
+          "#{prefix}_title".to_sym => summarize(entry.title),
           "#{prefix}_url".to_sym => entry.url
         }
+      end
+
+      private
+
+      # @param text String
+      # @return String
+      def summarize(text)
+        if text.length > MAX_SUMMARY_TEXT_LENGTH
+          text[0, MAX_SUMMARY_TEXT_LENGTH] + '...'
+        else
+          text
+        end
       end
     end
   end
