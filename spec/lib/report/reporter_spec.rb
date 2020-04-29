@@ -18,7 +18,7 @@ RSpec.describe 'Report::Reporter' do
       ),
       Roko::Report::Entry.new(
         'sub.type',
-        'long long long long sub.title',
+        "long long long long\nsub.title",
         'https://sub.url'
       )
     )

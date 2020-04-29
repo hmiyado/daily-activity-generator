@@ -47,7 +47,7 @@ module Roko
       def entry_hash(prefix, entry)
         {
           "#{prefix}_type".to_sym => entry.type,
-          "#{prefix}_title".to_sym => summarize(entry.title),
+          "#{prefix}_title".to_sym => summarize(entry.title.gsub("\n", ' ')),
           "#{prefix}_url".to_sym => entry.url
         }
       end
