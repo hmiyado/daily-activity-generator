@@ -24,14 +24,16 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PR review'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
-    expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/comment/1'
-    expect(actual_event.summary).to eq 'sample pull request title'
-    expect(actual_event.detail).to eq 'sample body'
+    expect(actual.source).to eq 'Github'
+    expect(actual.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
+    expect(actual.main.type).to eq 'PR'
+    expect(actual.main.title).to eq 'sample pull request title'
+    expect(actual.main.url).to eq 'https://github.com/org/repo/pulls/1'
+    expect(actual.sub.type).to eq 'review'
+    expect(actual.sub.title).to eq 'sample body'
+    expect(actual.sub.url).to eq 'https://github.com/org/repo/pulls/comment/1'
   end
 
   it 'should convert created_at of Time instance' do
@@ -50,14 +52,16 @@ RSpec.describe 'Source::Github::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.created_at = Time.parse(original_event.created_at)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PR open'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
-    expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/1'
-    expect(actual_event.summary).to eq 'sample pull request title'
-    expect(actual_event.detail).to eq 'sample pull request body'
+    expect(actual.source).to eq 'Github'
+    expect(actual.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
+    expect(actual.main.type).to eq 'PR'
+    expect(actual.main.url).to eq 'https://github.com/org/repo/pulls/1'
+    expect(actual.main.title).to eq 'sample pull request title'
+    expect(actual.sub.type).to eq 'open'
+    expect(actual.sub.url).to eq ''
+    expect(actual.sub.title).to eq ''
   end
 
   it 'should convert PullRequestEvent open' do
@@ -75,14 +79,16 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PR open'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
-    expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/1'
-    expect(actual_event.summary).to eq 'sample pull request title'
-    expect(actual_event.detail).to eq 'sample pull request body'
+    expect(actual.source).to eq 'Github'
+    expect(actual.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
+    expect(actual.main.type).to eq 'PR'
+    expect(actual.main.url).to eq 'https://github.com/org/repo/pulls/1'
+    expect(actual.main.title).to eq 'sample pull request title'
+    expect(actual.sub.type).to eq 'open'
+    expect(actual.sub.url).to eq ''
+    expect(actual.sub.title).to eq ''
   end
 
   it 'should convert PullRequestEvent closed' do
@@ -100,17 +106,19 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'PR closed'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
-    expect(actual_event.url).to eq 'https://github.com/org/repo/pulls/1'
-    expect(actual_event.summary).to eq 'sample pull request title'
-    expect(actual_event.detail).to eq 'sample pull request body'
+    expect(actual.source).to eq 'Github'
+    expect(actual.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
+    expect(actual.main.type).to eq 'PR'
+    expect(actual.main.url).to eq 'https://github.com/org/repo/pulls/1'
+    expect(actual.main.title).to eq 'sample pull request title'
+    expect(actual.sub.type).to eq 'closed'
+    expect(actual.sub.url).to eq ''
+    expect(actual.sub.title).to eq ''
   end
 
-  it 'should convert CreateEvent' do
+  it 'should not convert CreateEvent' do
     original_event_hash = {
       type: 'CreateEvent',
       created_at: '2020-02-21T09:45:11Z',
@@ -121,14 +129,9 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'create'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
-    expect(actual_event.url).to eq ''
-    expect(actual_event.summary).to eq 'branch feature/new_feature'
-    expect(actual_event.detail).to eq ''
+    expect(actual).to be_nil
   end
 
   it 'should convert DeleteEvent' do
@@ -142,14 +145,9 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'github'
-    expect(actual_event.event_type).to eq 'delete'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-21T09:45:11Z')
-    expect(actual_event.url).to eq ''
-    expect(actual_event.summary).to eq 'branch feature/new_feature'
-    expect(actual_event.detail).to eq ''
+    expect(actual).to be_nil
   end
 
   it 'should not convert PushEvent' do
@@ -161,9 +159,9 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event).to be_nil
+    expect(actual).to be_nil
   end
 
   it 'should not convert unknown event' do
@@ -175,8 +173,8 @@ RSpec.describe 'Source::Github::EventAdapter' do
     }
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Github::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Github::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event).to be_nil
+    expect(actual).to be_nil
   end
 end

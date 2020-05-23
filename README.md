@@ -61,22 +61,41 @@ Set your user name and password as environment variable `CONFLUENCE_USER`, `CONF
 
 This gem access `CONFLUENCE_URL` as confluence host.
 
-## Report Template
+## Report
+
+### Event
+
+source | time | type | title | url | sub_type | sub_title | sub_url
+:-- | :-- | :--| :-- | :-- | :-- | :-- | :--
+`Github` | date time of this pr is opened |`PR` | PR title | PR url | `open`  
+`Github` | date time of this review is posted | `PR` | PR title | PR url | `review` | comment body | comment url
+`Github` | date time of this pr is closed | `PR` | PR title | PR url | `close`
+`Google Calendar` | date time of this meeting is started  | `MTG` | MTG title | | `start` | 
+`Slack` | date time of posted | `channel` | channel name |  | `post` | post body | 
+`Confluence` | date time of this document is edited | `confluence` | document title | | `edit`
+`JIRA` | date time of this task is edited |`task` | ticket title | | `edit`
+
+### Tempalte
 
 You can change report template to set `ROKO_ONELINE_TEMPLATE`.
-The template is looks like `%{Y}/%{m}/%{d} %{H}:%{M} %{event_type} [%{summary}](%{url})`.
+The template is looks like `%{Y}/%{m}/%{d} %{H}:%{M} %{main_type} [%{main_title}](%{main_url})`.
 
 key | description
 :-- | :--
+`source` | source of this event
 `Y` | year
 `m` | month
 `d` | day
 `H` | hour of the day
 `M` | minute
-`event_type` | event type
-`summary` | the summary of the event
-`url` | url of this event
-`detail` | detail of this event
+`main_type` | type of this event
+`main_title` | title of this event
+`main_url` | url of main content of this event
+`sub_type` | sub type of this event
+`sub_title` | sub title of this event
+`sub_url` | url of sub content of this event
+
+See Event section to know what main/sub keys has.
 
 ## Usage
 

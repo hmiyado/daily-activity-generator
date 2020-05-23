@@ -21,15 +21,17 @@ RSpec.describe 'Source::Confluence::EventAdapter' do
         webui: '/pages/viewpage.action?pageId=123456789'
       }
     }
-    original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
+    original = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
 
-    actual_event = Roko::Source::Confluence::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::Confluence::EventAdapter.to_report_event(original)
 
-    expect(actual_event.source).to eq 'confluence'
-    expect(actual_event.event_type).to eq 'document'
-    expect(actual_event.created_at).to eq Time.parse('2020-02-25T22:10:35.008+09:00')
-    expect(actual_event.url).to eq "#{ENV['CONFLUENCE_URL']}/pages/viewpage.action?pageId=123456789"
-    expect(actual_event.summary).to eq 'title'
-    expect(actual_event.detail).to eq ''
+    expect(actual.source).to eq 'Confluence'
+    expect(actual.created_at).to eq Time.parse('2020-02-25T22:10:35.008+09:00')
+    expect(actual.main.type).to eq 'confluence'
+    expect(actual.main.title).to eq 'title'
+    expect(actual.main.url).to eq "#{ENV['CONFLUENCE_URL']}/pages/viewpage.action?pageId=123456789"
+    expect(actual.sub.type).to eq 'edit'
+    expect(actual.sub.title).to eq ''
+    expect(actual.sub.url).to eq ''
   end
 end

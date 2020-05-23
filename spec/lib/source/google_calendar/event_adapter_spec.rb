@@ -19,14 +19,16 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.start.date_time = DateTime.parse(original_event.start.date_time)
 
-    actual_event = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'google calendar'
-    expect(actual_event.event_type).to eq 'MTG'
-    expect(actual_event.created_at).to eq Time.parse('2020-01-01T12:34:00+09:00')
-    expect(actual_event.url).to eq 'https://html.link'
-    expect(actual_event.summary).to eq 'event summary'
-    expect(actual_event.detail).to eq 'description'
+    expect(actual.source).to eq 'Google Calendar'
+    expect(actual.created_at).to eq Time.parse('2020-01-01T12:34:00+09:00')
+    expect(actual.main.type).to eq 'MTG'
+    expect(actual.main.title).to eq 'event summary'
+    expect(actual.main.url).to eq 'https://html.link'
+    expect(actual.sub.type).to eq 'start'
+    expect(actual.sub.title).to eq ''
+    expect(actual.sub.url).to eq ''
   end
 
   it 'should convert google calendar all-day event' do
@@ -41,14 +43,16 @@ RSpec.describe 'Source::GoogleCalendar::EventAdapter' do
     original_event = JSON.parse(original_event_hash.to_json, object_class: OpenStruct)
     original_event.start.date = Date.parse(original_event.start.date)
 
-    actual_event = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
+    actual = Roko::Source::GoogleCalendar::EventAdapter.to_report_event(original_event)
 
-    expect(actual_event.source).to eq 'google calendar'
-    expect(actual_event.event_type).to eq 'MTG'
-    expect(actual_event.created_at).to eq Time.parse('2020-01-01T00:00:00+09:00')
-    expect(actual_event.url).to eq 'https://html.link'
-    expect(actual_event.summary).to eq 'event summary'
-    expect(actual_event.detail).to eq 'description'
+    expect(actual.source).to eq 'Google Calendar'
+    expect(actual.created_at).to eq Time.parse('2020-01-01T00:00:00+09:00')
+    expect(actual.main.type).to eq 'MTG'
+    expect(actual.main.title).to eq 'event summary'
+    expect(actual.main.url).to eq 'https://html.link'
+    expect(actual.sub.type).to eq 'start'
+    expect(actual.sub.title).to eq ''
+    expect(actual.sub.url).to eq ''
   end
 
   it 'should not convert google calendar event without start time' do

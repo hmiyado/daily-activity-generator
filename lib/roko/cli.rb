@@ -2,6 +2,7 @@
 
 require 'thor'
 require 'roko/source/events'
+require 'roko/report/reporter'
 
 module Roko
   # cli definitions
@@ -20,35 +21,35 @@ module Roko
     def github
       setup_configuration
       github_events = Roko::Source::Events.github
-      github_events.each { |event| puts event.oneline }
+      github_events.each { |event| puts @reporter.format(event) }
     end
 
     desc 'google_calendar', 'generate google calendar report'
     def google_calendar
       setup_configuration
       google_calendar_events = Roko::Source::Events.google_calendar
-      google_calendar_events.each { |event| puts event.oneline }
+      google_calendar_events.each { |event| puts @reporter.format(event) }
     end
 
     desc 'jira', 'generate jira report'
     def jira
       setup_configuration
       events = Roko::Source::Events.jira
-      events.each { |event| puts event.oneline }
+      events.each { |event| puts @reporter.format(event) }
     end
 
     desc 'slack', 'generate slack report'
     def slack
       setup_configuration
       events = Roko::Source::Events.slack
-      events.map { |event| puts event.oneline }
+      events.map { |event| puts @reporter.format(event) }
     end
 
     desc 'confluence', 'generate confluence report'
     def confluence
       setup_configuration
       events = Roko::Source::Events.confluence
-      events.map { |event| puts event.oneline }
+      events.map { |event| puts @reporter.format(event) }
     end
 
     desc 'all', 'generate report'
@@ -56,13 +57,14 @@ module Roko
       setup_configuration
 
       today_events = Roko::Source::Events.all
-      today_events.map { |event| puts event.oneline }
+      today_events.map { |event| puts @reporter.format(event) }
     end
     map today: :all
 
     private
 
     def setup_configuration
+      @reporter = Roko::Report::Reporter.new
       Source::Events.setup(options)
     end
   end

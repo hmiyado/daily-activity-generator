@@ -1,30 +1,31 @@
 # frozen_string_literal: true
 
-require 'roko/report_event'
+require 'roko/report/event'
+require 'roko/report/entry'
 require 'time'
 
 module Roko
   module Source
     module Github
-      # convert from Github event [Sawyer::Resource] to [Roko::ReportEvent]
+      # convert from Github event [Sawyer::Resource] to [Roko::Report::Event]
       module EventAdapter
         class << self
           # @param event [Sawyer::Resource]
-          # @return [Roko::ReportEvent] or nil
+          # @return [Roko::Report::Event] or nil
           def to_report_event(event)
             created_at = extract_created_at(event)
-            payload = extract_from_payload(event.type, event.payload)
-            return nil if payload.nil? || created_at.nil?
+            return nil if created_at.nil?
+            return nil unless is_acceptable_event_type(event.type)
 
-            Roko::ReportEvent.new(
-              'github',
-              payload[:event_type],
+            Roko::Report::Event.new(
+              'Github',
               created_at,
-              payload[:url],
-              payload[:summary],
-              payload[:detail]
+              extract_main_entry(event.payload),
+              extract_sub_entry(event.type, event.payload)
             )
           end
+
+          private
 
           # @param [Sawyer::Resource]
           # @return [Time] or nil if created_at is not present
@@ -37,31 +38,43 @@ module Roko
             end
           end
 
+          # @param [String]
+          # @return [Boolean]
+          def is_acceptable_event_type(event_type)
+            %w[PullRequestReviewCommentEvent PullRequestEvent].include? event_type
+          end
+
+          # @param [Hash]
+          # @return [Roko::Report::Entry]
+          def extract_main_entry(payload)
+            Roko::Report::Entry.new(
+              'PR',
+              payload.pull_request.title.to_s,
+              payload.pull_request.html_url
+            )
+          end
+
           # @param event_type [String] github event type name
           # @param payload [Hash] github event payload
           # @return [String, String, String, String]
-          def extract_from_payload(event_type, payload)
+          def extract_sub_entry(event_type, payload)
             case event_type
-            when 'PullRequestReviewCommentEvent' then
-              { event_type: 'PR review',
-                url: payload.comment.html_url,
-                summary: payload.pull_request.title.to_s,
-                detail: payload.comment.body }
-            when 'PullRequestEvent' then
-              { event_type: "PR #{payload.action}",
-                url: payload.pull_request.html_url,
-                summary: payload.pull_request.title.to_s,
-                detail: payload.pull_request.body }
-            when 'CreateEvent' then
-              { event_type: 'create',
-                url: '',
-                summary: "#{payload.ref_type} #{payload.ref}",
-                detail: '' }
-            when 'DeleteEvent' then
-              { event_type: 'delete',
-                url: '',
-                summary: "#{payload.ref_type} #{payload.ref}",
-                detail: '' }
+            when 'PullRequestReviewCommentEvent'
+              Roko::Report::Entry.new(
+                'review',
+                payload.comment.body,
+                payload.comment.html_url
+              )
+            when 'PullRequestEvent'
+              Roko::Report::Entry.new(
+                payload.action,
+                '',
+                ''
+              )
+            when 'CreateEvent'
+              nil
+            when 'DeleteEvent'
+              nil
             when 'PushEvent'
               nil
             end
